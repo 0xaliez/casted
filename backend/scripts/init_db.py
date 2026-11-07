@@ -1,7 +1,7 @@
 from pathlib import Path
-from db import pool
+from app.db import pool
 
 with pool.connection() as conn:
-    conn.execute(Path("schema.sql").read_text())
+    conn.execute(Path("..\sql\schema.sql").read_text())
 
 print("Tables ready")
