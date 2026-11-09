@@ -71,3 +71,23 @@ def best_shortest_route(movies_of, cast_of, points, start, end):
         route.append(node[1])
         node = best[node][1]
     return route[::-1]
+
+def person_distances(movies_of, cast_of, start):
+    """Films away from `start` for every actor reachable from them: {actor_id: films}."""
+    depth = {("p", start): 0}
+    queue = deque([("p", start)])
+    result = {start: 0}
+    while queue:
+        node = queue.popleft()
+        kind, id_ = node
+        if kind == "p":
+            nbrs = [("m", m) for m in movies_of.get(id_, [])]
+        else:
+            nbrs = [("p", p) for p in cast_of.get(id_, [])]
+        for n in nbrs:
+            if n not in depth:
+                depth[n] = depth[node] + 1
+                queue.append(n)
+                if n[0] == "p":
+                    result[n[1]] = depth[n] // 2
+    return result
