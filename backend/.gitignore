@@ -24,6 +24,9 @@ __pycache__/
 *.log
 .cache/
 
+# Scripts
+backfill_*.py
+
 # Editor and OS files
 .vscode/
 .idea/

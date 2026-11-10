@@ -86,6 +86,7 @@ def clean(d):
         "year": int(d["release_date"][:4]),
         "runtime": d["runtime"],
         "genres": genres,
+        "lang": d.get("original_language"),
         "poster": d.get("poster_path"),
         "votes": d["vote_count"],
         "cast": cast,
@@ -101,11 +102,11 @@ def save(conn, m):
     # obscurity and tier are placeholders here; finalize() computes the real values
     conn.execute(
         """INSERT INTO movie (id, title, title_search, release_year, runtime,
-                              genres, poster_path, vote_count, obscurity, tier)
-           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, 0, 3)
+                              genres, poster_path, vote_count, original_language, obscurity, tier)
+           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, 0, 3)
            ON CONFLICT (id) DO NOTHING""",
         (m["id"], m["title"], norm(m["title"]), m["year"], m["runtime"],
-         m["genres"], m["poster"], m["votes"]),
+         m["genres"], m["poster"], m["votes"], m["lang"]),
     )
     with conn.cursor() as cur:
         cur.executemany(

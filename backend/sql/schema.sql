@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS movie (
   release_year SMALLINT NOT NULL,
   runtime SMALLINT NOT NULL,
   genres SMALLINT[] NOT NULL,
+  original_language TEXT,
   poster_path TEXT,
   vote_count INT NOT NULL,
   obscurity REAL NOT NULL,            -- 0 to 1
